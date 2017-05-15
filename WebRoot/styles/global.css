@@ -1,0 +1,43 @@
+﻿@charset "utf-8";
+body{
+	font-family:Verdana,"楷体_GB2312";
+	font-size:12px;
+	margin:0px;
+	padding:0px;
+	background-color:#e8f0f6;
+}
+div{
+	margin:0px;
+	padding:0px;
+}
+ul{
+	margin:0px;
+	padding:0px;
+	list-style:none;
+}
+li{
+	margin:0px;
+	padding:0px;
+}
+form{
+	margin:0px;
+	padding:0px;
+}
+p{
+	margin:0px;
+	padding:0px;
+}
+img{
+	border:0px;
+	margin:0px;
+	padding:0px;
+}
+a,a:link,a:visited,a:hover{
+	text-decoration:none;
+	color:#3399FF;
+	margin:0px;
+	padding:0px;
+}
+legend{
+	font-size: 16px;
+}

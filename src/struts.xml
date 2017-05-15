@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<!-- 防止Struts2 的 FilterDispatcher 和 自定义过滤器引发冲突 -->
+	<constant name="struts.action.extension" value="action"></constant>
+	<constant name="objectFactory" value="spring"></constant>
+
+	<package name="struts" extends="struts-default" namespace="/">
+
+		<!-- 拦截器的声明 -->
+		<interceptors>
+			<interceptor name="adminSecurity"
+				class="com.interceptors.AdminSecurityInterceptor" />
+			<interceptor name="memberSecurity"
+				class="com.interceptors.MemberSecurityInterceptor" />
+
+			<interceptor name="privilegeMovieSecurityInterceptor"
+				class="com.interceptors.PrivilegeMovieSecurityInterceptor">
+			</interceptor>
+			<interceptor name="privilegePlaySecurityInterceptor"
+				class="com.interceptors.PrivilegePlaySecurityInterceptor">
+			</interceptor>
+			<interceptor name="privilegeMemberSecurityInterceptor"
+				class="com.interceptors.PrivilegeMemberSecurityInterceptor">
+			</interceptor>
+			<interceptor name="privilegeAdSecurityInterceptor"
+				class="com.interceptors.PrivilegeAdSecurityInterceptor">
+			</interceptor>
+			<interceptor name="privilegeAdminSecurityInterceptor"
+				class="com.interceptors.PrivilegeAdminSecurityInterceptor">
+			</interceptor>
+			<interceptor name="privilegeTicketSecurityInterceptor"
+				class="com.interceptors.PrivilegeTicketSecurityInterceptor">
+			</interceptor>
+		</interceptors>
+
+		<global-results>
+			<result name="login">/login.jsp</result>
+			<result name="adminLogin">/admin/adminLogin.jsp</result>
+		</global-results>
+
+		<!-- 生成随机数的Actions -->
+		<action name="rand" class="com.action.RandomAction">
+			<result type="stream">
+				<param name="contentType">image/jpeg</param>
+				<param name="inputName">inputStream</param>
+			</result>
+		</action>
+
+		<action name="close" class="com.util.close"></action>
+
+		<action name="member" class="memberAction">
+			<result name="index">/index.jsp</result>
+			<result name="showMembers">/admin/showMembers.jsp</result>
+			<result name="updateInfo">/updateInfo.jsp</result>
+			<result name="updatePwd">/updatePwd.jsp</result>
+			<result name="updateMember">/admin/updateMember.jsp</result>
+
+			<interceptor-ref name="memberSecurity">
+				<param name="name">member</param>
+				<param name="includeMethods">modifyMemberInfo,modifyMemberPhoto,modifyMemberPwd,checkOldMemberPwd</param>
+			</interceptor-ref>
+			<interceptor-ref name="adminSecurity">
+				<param name="name">member</param>
+				<param name="includeMethods">searchMembersByPage,saveMember,removeMember,findMemberById,modifyMember</param>
+			</interceptor-ref>
+
+			<interceptor-ref name="privilegeMemberSecurityInterceptor">
+				<param name="name">member</param>
+				<param name="includeMethods">searchMembersByPage,saveMember,removeMember,findMemberById,modifyMember</param>
+			</interceptor-ref>
+			
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+
+		</action>
+
+		<action name="admin" class="adminAction">
+			<result name="success">/admin/adminIndex.jsp</result>
+			<result name="login">/admin/adminLogin.jsp</result>
+			<result name="showAdmin">/admin/showAdmin.jsp</result>
+			<result name="updateAdmin">/admin/updateAdmin.jsp</result>
+
+			<interceptor-ref name="adminSecurity">
+				<param name="name">member</param>
+				<param name="includeMethods">searchAdmin,saveAdmin,IsExistAdminName,findAdminById,modifyAdmin,removeAdmin,getPrivilegeConverter</param>
+			</interceptor-ref>
+
+			<interceptor-ref name="privilegeAdminSecurityInterceptor">
+				<param name="name">admin</param>
+				<param name="includeMethods">searchAdmin,saveAdmin,IsExistAdminName,findAdminById,modifyAdmin,removeAdmin,getPrivilegeConverter</param>
+			</interceptor-ref>
+			
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+
+		<action name="movie" class="movieAction">
+			<result name="index">/index.jsp</result>
+			<result name="movies">/movies.jsp</result>
+			<result name="showMovies">/admin/showMovies.jsp</result>
+			<result name="updateMovie">/admin/updateMovie.jsp</result>
+			<result name="memberCenter">/memberCenter.jsp</result>
+
+			<interceptor-ref name="fileUpload">
+				<param name="maximumSize">10*1024*1024</param> <!-- 上传文件的最大限度 -->
+				<param name="allowedTypes">
+					image/bmp,image/x-png,image/png,image/gif,image/jpeg,image/jpg,image/pjpeg
+				</param>
+			</interceptor-ref>
+
+			<interceptor-ref name="adminSecurity">
+				<param name="name">movie</param>
+				<param name="includeMethods">saveMovie,searchMoviesByPage,removeMovie,showMovie,modifyMovie,findMovieById</param>
+			</interceptor-ref>
+
+			<interceptor-ref name="privilegeMovieSecurityInterceptor">
+				<param name="name">movie</param>
+				<param name="includeMethods">saveMovie,searchMoviesByPage,removeMovie,showMovie,modifyMovie,findMovieById</param>
+			</interceptor-ref>
+			
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+
+		<action name="ad" class="adAction">
+			<result name="updateAd">/admin/updateAd.jsp</result>
+
+			<interceptor-ref name="adminSecurity">
+				<param name="name">ad</param>
+				<param name="includeMethods">findAllAd,modifyAd</param>
+			</interceptor-ref>
+
+			<interceptor-ref name="privilegeAdSecurityInterceptor">
+				<param name="name">ad</param>
+				<param name="includeMethods">findAllAd,modifyAd</param>
+			</interceptor-ref>
+			
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+
+		</action>
+
+		<action name="play" class="playAction">
+			<result name="showPlaies">/admin/showPlaies.jsp</result>
+			<result name="updatePlay">/admin/updatePlay.jsp</result>
+			<result name="time">/time.jsp</result>
+			<result name="oneMovie">/oneMovie.jsp</result>
+			<result name="seat">/seat.jsp</result>
+			<result name="pay">/pay.jsp</result>
+
+			<interceptor-ref name="adminSecurity">
+				<param name="name">play</param>
+				<param name="includeMethods">savePlay,findPlaiesByPage,findPlaiesByTimeByPage,romevePlay,findPlay,modifyPlay</param>
+			</interceptor-ref>
+			
+			<interceptor-ref name="memberSecurity">
+				<param name="name">play</param>
+				<param name="includeMethods">showSeat,showPay</param>
+			</interceptor-ref>
+
+			<interceptor-ref name="privilegePlaySecurityInterceptor">
+			<param name="name">play</param>
+					<param name="includeMethods">savePlay,findPlaiesByPage,findPlaiesByTimeByPage,romevePlay,findPlay,modifyPlay</param>
+			</interceptor-ref>
+			
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+
+		</action>
+
+		<action name="ticket" class="ticketAction">
+			<result name="myOrder">/myOrder.jsp</result>
+			<result name="memberCenter">/memberCenter.jsp</result>
+			<result name="showTickets">/admin/showTickets.jsp</result>
+
+			<interceptor-ref name="adminSecurity">
+				<param name="name">ticket</param>
+				<param name="includeMethods">searchTickets</param>
+			</interceptor-ref>
+			
+			<interceptor-ref name="memberSecurity">
+				<param name="name">ticket</param>
+				<param name="includeMethods">addTickets,showOrder,showTodayOrder</param>
+			</interceptor-ref>
+			
+			<interceptor-ref name="privilegeTicketSecurityInterceptor">
+			<param name="name">play</param>
+					<param name="includeMethods">searchTickets</param>
+			</interceptor-ref>
+			
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+
+		<action name="kind" class="kindAction">
+			<result name="saveMovie">/admin/saveMovie.jsp</result>
+
+			<interceptor-ref name="adminSecurity">
+				<param name="name">kind</param>
+				<param name="includeMethods">saveKind</param>
+			</interceptor-ref>
+
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+
+		<action name="language" class="languageAction">
+			<result name="saveMovie">/admin/saveMovie.jsp</result>
+
+			<interceptor-ref name="adminSecurity">
+				<param name="name">language</param>
+				<param name="includeMethods">saveLanguage</param>
+			</interceptor-ref>
+
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+
+		<action name="edition" class="editionAction">
+			<result name="saveMovie">/admin/saveMovie.jsp</result>
+
+			<interceptor-ref name="adminSecurity">
+				<param name="name">edition</param>
+				<param name="includeMethods">saveEdition</param>
+			</interceptor-ref>
+
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+
+	</package>
+
+</struts>    

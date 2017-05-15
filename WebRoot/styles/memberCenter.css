@@ -1,0 +1,19 @@
+@charset "utf-8";
+#main{
+	width:1000px;
+	margin:auto;
+}
+#main_center{
+	width:580px;
+	float:left;
+	margin-left:10px;
+}
+#main_center_bottom{
+	margin-top:10px;
+}
+#main_center_bottom table{
+	margin-bottom:20px;
+}
+#main_center_bottom hr{
+	margin-bottom:20px;
+}

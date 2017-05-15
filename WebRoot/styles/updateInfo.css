@@ -1,0 +1,21 @@
+@charset "utf-8";
+#main{
+	width:1000px;
+	margin:auto;
+}
+#main_top{
+	margin:10px 0px;
+}
+#main_right{
+	float:right;
+	width:800px;
+}
+#main_right_middle{
+	margin-top:10px;
+}
+
+
+#main_bottom{
+	clear:both;
+	padding-top:10px;
+}

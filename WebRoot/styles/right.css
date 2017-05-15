@@ -1,0 +1,10 @@
+@charset "utf-8";
+#main_right{
+	float:right;	
+	width:230px;
+}
+#main_right a{
+	display:block;
+	margin:10px 0px;
+}
+

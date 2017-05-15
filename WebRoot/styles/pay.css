@@ -1,0 +1,29 @@
+@charset "utf-8";
+#main{
+	width:1000px;
+	margin:auto;
+}
+#main_bottom{
+	background:#ffffff;
+	margin-top:10px;
+	padding:10px;
+}
+#main_bottom_left{
+	width:235px; 
+	border-right:1px #000000 dashed; 
+	margin:10px;
+	float:left;
+}
+#main_bottom_left li{
+	line-height:18px;
+}
+
+#main_bottom_right{
+	float:right;
+	width:670px;
+	margin:10px;
+}
+#main_bottom_right img{
+	border:1px #cccccc solid;
+	margin:5px;
+}

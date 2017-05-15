@@ -1,0 +1,9 @@
+@charset "utf-8";
+#main{
+	width:1000px;
+	margin:auto;
+	background-image:url(../images/login_bj.png);
+	background-repeat:no-repeat;
+	height:421px;
+	margin-top:50px;
+}

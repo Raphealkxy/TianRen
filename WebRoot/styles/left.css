@@ -1,0 +1,11 @@
+@charset "utf-8";
+#main_left{
+	margin-top:10px;
+	width:160px;
+	float:left;
+}
+#main_left ul li a{
+	padding:5px 0px;
+	margin:2px 0px;
+	display:block;
+}
